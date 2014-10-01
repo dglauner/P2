@@ -1,7 +1,8 @@
 <?php
-//Globals
+//Globals for min & max number of words
 $maxwords = 10;
 $minwords = 2;
+
 //Word Array
 $words[0]   = "dog";
 $words[1] = "cat";
@@ -41,7 +42,7 @@ $do_add_num = setFlag('add_num');
 //Track option to add symbol
 $do_add_sym = setFlag('add_sym');
 //Track requested word count
-$word_cnt = get_word_count('num_words', $maxwords, $minwords);
+$word_cnt = getWordCount('num_words', $maxwords, $minwords);
 
 //Start: Generate new password
 $rand_nums = getUniqueNumbers(0, count($words) - 1, $word_cnt);
@@ -65,20 +66,31 @@ if ($do_add_sym  == TRUE){
 
 
 function setFlag($key){
-	//get key return value with hack prevention
+	/*******************************************
+		key: Querystring index
+	********************************************
+		Get the querystring value for a key
+	********************************************/
+	 
 	$retval = FALSE;
-	
 	if (isset($_GET[$key])) {
 		if (strtolower($_GET[$key]) == 'on') {
 			$retval = TRUE;
 		}
 	}
-	
 	return $retval;
 }
 
-function get_word_count($key, $max, $min){
-	//Track number of words
+function getWordCount($key, $max, $min){
+	/*******************************************
+		min: Minimum number
+		max: Maximum number
+		key: Querystring index
+	********************************************
+		Get the number of words requested 
+		by the user passed in the querystring.
+		Make sure it's within min and max.
+	********************************************/
 	$retval = 4;
 	if (isset($_GET['num_words'])) {
 		$retval = (int)$_GET['num_words'];
@@ -99,6 +111,9 @@ function getUniqueNumbers($min, $max, $num)
 		min: Minimum number
 		max: Maximum number
 		num: Number of random numbers to return
+	*********************************************
+		Returns an array of random unique numbers 
+		within a range between min and max
 	********************************************/
 	$tempval = range($min,$max);
 	shuffle($tempval);

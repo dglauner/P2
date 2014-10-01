@@ -3,7 +3,15 @@
 }
 
 .descBox{
-	width:500px;
+	max-width:500px;
 	margin:0 auto;
 	background-color:beige;
+}
+
+.pwdBox{
+	background-color:aquamarine;
+	padding-top:5px;
+	padding-bottom:5px;
+	max-width:1500px;
+	margin:0 auto;
 }
