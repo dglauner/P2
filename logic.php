@@ -1,6 +1,7 @@
 <?php
 //Globals
 $maxwords = 10;
+$minwords = 2;
 //Word Array
 $words[0]   = "dog";
 $words[1] = "cat";
@@ -35,44 +36,12 @@ $symbols[7]   = "*";
 $symbols[8]   = "~";
 $symbols[9]   = "+";
 
-
-//Track number of words
-if (isset($_GET['num_words'])) {
-	$word_cnt = (int)$_GET['num_words'];
-} else {
-	$word_cnt = 4;
-}
-	//hack prevention
-if ($word_cnt > $maxwords){
-	$word_cnt = $maxwords;
-} elseif ($word_cnt < 2){
-	$word_cnt = 2;
-}
-
 //Track option to add number
-if (isset($_GET['add_num'])) {
-	$do_add_num = TRUE;
-} else {
-	$do_add_num = FALSE;
-}
+$do_add_num = setFlag('add_num');
 //Track option to add symbol
-if (isset($_GET['add_sym'])) {
-	$do_add_sym = TRUE;
-} else {
-	$do_add_sym = FALSE;
-}
-
-function setFlag($key){
-	$retval = FALSE;
-	
-	if (isset($_GET[$key])) {
-		if (strtolower($_GET[$key]) == 'on') {
-			$retval = TRUE;
-		}
-	}
-	
-	return $retval;
-}
+$do_add_sym = setFlag('add_sym');
+//Track requested word count
+$word_cnt = get_word_count('num_words', $maxwords, $minwords);
 
 //Start: Generate new password
 $rand_nums = getUniqueNumbers(0, count($words) - 1, $word_cnt);
@@ -94,6 +63,35 @@ if ($do_add_sym  == TRUE){
 }
 //end: Generate new password
 
+
+function setFlag($key){
+	//get key return value with hack prevention
+	$retval = FALSE;
+	
+	if (isset($_GET[$key])) {
+		if (strtolower($_GET[$key]) == 'on') {
+			$retval = TRUE;
+		}
+	}
+	
+	return $retval;
+}
+
+function get_word_count($key, $max, $min){
+	//Track number of words
+	$retval = 4;
+	if (isset($_GET['num_words'])) {
+		$retval = (int)$_GET['num_words'];
+	}
+	//only allow within a certain range
+	if ($retval > $max){
+		$retval = $max;
+	} elseif ($retval < $min){
+		$retval = $min;
+	}
+	
+	return $retval;
+}
 
 function getUniqueNumbers($min, $max, $num)
 {

@@ -13,14 +13,14 @@
 <body>
 
 <h1>xkcd Password Generator</h1>
-<p>The button below will generate a random phrase consisting of four common words. According to an xkcd strip,<br/> such phrases are hard to guess (even by brute force), but easy to remember, making them interesting password choices.</p>
+<p class="descBox">The button below will generate a random phrase consisting of four common words. According to an xkcd strip, such phrases are hard to guess (even by brute force), but easy to remember, making them interesting password choices.</p>
 <h1><?php echo $new_pwd; ?></h1>
 <form method='Get' action='index.php'>
 	<label for="num_words"># of Words</label>
 	<select id="num_words" name="num_words">	
 	<?php 
 	$output = "";
-	for ($j = 2; $j <= $maxwords; $j++) { 
+	for ($j = $minwords; $j <= $maxwords; $j++) { 
     	if ($j == $word_cnt) { 
     	$output = $output."<option value=".$j." selected='selected'>".$j."</option>";
     	 } else { 
