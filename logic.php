@@ -62,6 +62,18 @@ if (isset($_GET['add_sym'])) {
 	$do_add_sym = FALSE;
 }
 
+function setFlag($key){
+	$retval = FALSE;
+	
+	if (isset($_GET[$key])) {
+		if (strtolower($_GET[$key]) == 'on') {
+			$retval = TRUE;
+		}
+	}
+	
+	return $retval;
+}
+
 //Start: Generate new password
 $rand_nums = getUniqueNumbers(0, count($words) - 1, $word_cnt);
 
