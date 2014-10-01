@@ -1,29 +1,11 @@
 <?php
+session_start();
 //Globals for min & max number of words
 $maxwords = 10;
 $minwords = 2;
 
 //Word Array
-$words[0]   = "dog";
-$words[1] = "cat";
-$words[2]   = "pizza";
-$words[3]   = "telephone";
-$words[4]   = "tape";
-$words[5]   = "bronco";
-$words[6]   = "iphone";
-$words[7]   = "together";
-$words[8]   = "book";
-$words[9]   = "second";
-$words[10]   = "western";
-$words[11]   = "massage";
-$words[12]   = "voice";
-$words[13]   = "engine";
-$words[14]   = "radio";
-$words[15]   = "computer";
-$words[16]   = "television";
-$words[17]   = "cassette";
-$words[18]   = "spindle";
-$words[19]   = "notepad";
+$words = generateWordList();
 
 //symbol Array
 $symbols[0]   = "!";
@@ -69,7 +51,7 @@ function setFlag($key){
 	/*******************************************
 		key: Querystring index
 	********************************************
-		Get the querystring value for a key
+		Get the querystring value for a key...
 	********************************************/
 	 
 	$retval = FALSE;
@@ -89,7 +71,7 @@ function getWordCount($key, $max, $min){
 	********************************************
 		Get the number of words requested 
 		by the user passed in the querystring.
-		Make sure it's within min and max.
+		Make sure it's within min and max...
 	********************************************/
 	$retval = 4;
 	if (isset($_GET['num_words'])) {
@@ -113,11 +95,36 @@ function getUniqueNumbers($min, $max, $num)
 		num: Number of random numbers to return
 	*********************************************
 		Returns an array of random unique numbers 
-		within a range between min and max
+		within a range between min and max...
 	********************************************/
 	$tempval = range($min,$max);
 	shuffle($tempval);
     return array_slice ($tempval, 0, $num);
+}
+
+function generateWordList(){
+	/*******************************************
+		Returns an array of words to be used 
+		as the source to generate a new password.
+		
+		Creates the word array the first time
+		and then stores it as a session variable
+		for reuse later...
+	********************************************/
+	if (isset($_SESSION['wordlist'])){
+    	$wordList = $_SESSION['wordlist'];
+	} else {
+	    //open my local word file
+		$myFile = file_get_contents('words.txt', TRUE);
+		//set replacement order
+		$replaceOrder = array("\r\n", "\r");
+		$newstr = str_replace($replaceOrder, "\n" , $myFile);
+		//Trim any whitespace
+		$wordList = array_map('trim', explode("\n", $newstr));
+	    $_SESSION['wordlist']=$wordList;
+	}
+		
+	return $wordList;
 }
 
 ?>
