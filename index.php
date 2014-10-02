@@ -65,7 +65,8 @@
     <input type='submit' value='Create Password'><br>
     
 </form>
-
+<br/>
+<img src="http://imgs.xkcd.com/comics/password_strength.png" alt="xkcd image" />
 </body>
 
 </html>

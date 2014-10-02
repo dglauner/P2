@@ -1,5 +1,4 @@
 <?php
-session_start();
 //Globals for min & max number of words
 $maxwords = 10;
 $minwords = 2;
@@ -108,14 +107,7 @@ function generateWordList(){
 	/*******************************************
 		Returns an array of words to be used 
 		as the source to generate a new password.
-		
-		Creates the word array the first time
-		and then stores it as a session variable
-		for reuse later...
 	********************************************/
-	if (isset($_SESSION['wordlist'])){
-    	$wordList = $_SESSION['wordlist'];
-	} else {
 	    //open my local word file
 		$myFile = file_get_contents('words.txt', TRUE);
 		//set replacement order
@@ -123,8 +115,6 @@ function generateWordList(){
 		$newstr = str_replace($replaceOrder, "\n" , $myFile);
 		//Trim any whitespace
 		$wordList = array_map('trim', explode("\n", $newstr));
-	    $_SESSION['wordlist']=$wordList;
-	}
 		
 	return $wordList;
 }
