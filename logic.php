@@ -108,13 +108,13 @@ function generateWordList(){
 		Returns an array of words to be used 
 		as the source to generate a new password.
 	********************************************/
-	    //open my local word file
-		$myFile = file_get_contents('words.txt', TRUE);
-		//set replacement order
-		$replaceOrder = array("\r\n", "\r");
-		$newstr = str_replace($replaceOrder, "\n" , $myFile);
-		//Trim any whitespace
-		$wordList = array_map('trim', explode("\n", $newstr));
+    //open my local word file
+	$myFile = file_get_contents('words.txt', TRUE);
+	//set replacement order
+	$replaceOrder = array("\r\n", "\r");
+	$newstr = str_replace($replaceOrder, "\n" , $myFile);
+	//Trim any whitespace
+	$wordList = array_map('trim', explode("\n", $newstr));
 		
 	return $wordList;
 }
