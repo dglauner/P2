@@ -32,7 +32,22 @@
      echo $output;
      ?>		
 	</select>
-    <br>
+    <br/>
+    <label for="sep_idx">Type of Separator</label>
+    <select id="sep_idx" name="sep_idx">	
+	<?php 
+	$output = "";
+	for ($j = 0; $j < count($symbols); $j++) { 
+    	if ($j == $sep_idx) { 
+    	$output = $output."<option value=".$j." selected='selected'>".$symbols[$j]."</option>";
+    	 } else { 
+    	$output = $output."<option value=".$j.">".$symbols[$j]."</option>";
+    	}
+     } 
+     echo $output;
+     ?>		
+	</select>
+	<br/>
     
     <label for='add_num'>Add a random number</label>
     <?PHP if ($do_add_num == TRUE){ 
